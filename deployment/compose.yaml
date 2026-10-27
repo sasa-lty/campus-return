@@ -1,0 +1,85 @@
+name: campus-return
+services:
+  orderer:
+    image: hyperledger/fabric-orderer:2.5.15
+    container_name: cr-orderer.example.com
+    hostname: cr-orderer.example.com
+    environment:
+      ORDERER_GENERAL_LISTENADDRESS: 0.0.0.0
+      ORDERER_GENERAL_LISTENPORT: 7050
+      ORDERER_GENERAL_LOCALMSPID: OrdererMSP
+      ORDERER_GENERAL_LOCALMSPDIR: /var/hyperledger/orderer/msp
+      ORDERER_GENERAL_BOOTSTRAPMETHOD: none
+      ORDERER_CHANNELPARTICIPATION_ENABLED: 'true'
+      ORDERER_GENERAL_TLS_ENABLED: 'true'
+      ORDERER_GENERAL_TLS_PRIVATEKEY: /var/hyperledger/orderer/tls/server.key
+      ORDERER_GENERAL_TLS_CERTIFICATE: /var/hyperledger/orderer/tls/server.crt
+      ORDERER_GENERAL_TLS_ROOTCAS: '[/var/hyperledger/orderer/tls/ca.crt]'
+      ORDERER_ADMIN_TLS_ENABLED: 'true'
+      ORDERER_ADMIN_TLS_PRIVATEKEY: /var/hyperledger/orderer/tls/server.key
+      ORDERER_ADMIN_TLS_CERTIFICATE: /var/hyperledger/orderer/tls/server.crt
+      ORDERER_ADMIN_TLS_CLIENTROOTCAS: '[/var/hyperledger/orderer/tls/ca.crt]'
+      ORDERER_ADMIN_LISTENADDRESS: 0.0.0.0:7053
+    ports: ['127.0.0.1:17050:7050','127.0.0.1:17053:7053']
+    volumes:
+      - ${FABRIC_ROOT}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp:/var/hyperledger/orderer/msp:ro
+      - ${FABRIC_ROOT}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/tls:/var/hyperledger/orderer/tls:ro
+      - orderer-data:/var/hyperledger/production/orderer
+    networks: [returnnet]
+  peer1:
+    image: hyperledger/fabric-peer:2.5.15
+    container_name: cr-peer0.org1.example.com
+    hostname: cr-peer0.org1.example.com
+    environment: &peer-env
+      CORE_PEER_ID: cr-peer0.org1.example.com
+      CORE_PEER_ADDRESS: cr-peer0.org1.example.com:7051
+      CORE_PEER_LISTENADDRESS: 0.0.0.0:7051
+      CORE_PEER_CHAINCODEADDRESS: cr-peer0.org1.example.com:7052
+      CORE_PEER_CHAINCODELISTENADDRESS: 0.0.0.0:7052
+      CORE_PEER_GOSSIP_EXTERNALENDPOINT: cr-peer0.org1.example.com:7051
+      CORE_PEER_GOSSIP_BOOTSTRAP: cr-peer0.org1.example.com:7051
+      CORE_PEER_GOSSIP_USELEADERELECTION: 'true'
+      CORE_PEER_GOSSIP_ORGLEADER: 'false'
+      CORE_PEER_LOCALMSPID: Org1MSP
+      CORE_PEER_MSPCONFIGPATH: /etc/hyperledger/fabric/msp
+      CORE_PEER_TLS_ENABLED: 'true'
+      CORE_PEER_TLS_CERT_FILE: /etc/hyperledger/fabric/tls/server.crt
+      CORE_PEER_TLS_KEY_FILE: /etc/hyperledger/fabric/tls/server.key
+      CORE_PEER_TLS_ROOTCERT_FILE: /etc/hyperledger/fabric/tls/ca.crt
+      CORE_VM_ENDPOINT: unix:///host/var/run/docker.sock
+      CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE: campus-return-network
+      CORE_CHAINCODE_BUILDER: hyperledger/fabric-ccenv:2.5.15
+      CORE_CHAINCODE_RUNTIME: hyperledger/fabric-baseos:2.5.15
+    ports: ['127.0.0.1:17051:7051']
+    volumes:
+      - /var/run/docker.sock:/host/var/run/docker.sock
+      - ${FABRIC_ROOT}/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/msp:/etc/hyperledger/fabric/msp:ro
+      - ${FABRIC_ROOT}/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls:/etc/hyperledger/fabric/tls:ro
+      - peer1-data:/var/hyperledger/production
+    networks: [returnnet]
+  peer2:
+    image: hyperledger/fabric-peer:2.5.15
+    container_name: cr-peer0.org2.example.com
+    hostname: cr-peer0.org2.example.com
+    environment:
+      <<: *peer-env
+      CORE_PEER_ID: cr-peer0.org2.example.com
+      CORE_PEER_ADDRESS: cr-peer0.org2.example.com:7051
+      CORE_PEER_CHAINCODEADDRESS: cr-peer0.org2.example.com:7052
+      CORE_PEER_GOSSIP_EXTERNALENDPOINT: cr-peer0.org2.example.com:7051
+      CORE_PEER_GOSSIP_BOOTSTRAP: cr-peer0.org2.example.com:7051
+      CORE_PEER_LOCALMSPID: Org2MSP
+    ports: ['127.0.0.1:19051:7051']
+    volumes:
+      - /var/run/docker.sock:/host/var/run/docker.sock
+      - ${FABRIC_ROOT}/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/msp:/etc/hyperledger/fabric/msp:ro
+      - ${FABRIC_ROOT}/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls:/etc/hyperledger/fabric/tls:ro
+      - peer2-data:/var/hyperledger/production
+    networks: [returnnet]
+networks:
+  returnnet:
+    name: campus-return-network
+volumes:
+  orderer-data:
+  peer1-data:
+  peer2-data:

@@ -1,0 +1,134 @@
+[
+  {
+    "source": "用户提供",
+    "originalFilename": "_MG_3840.jpg",
+    "originalSize": [
+      5952,
+      3824
+    ],
+    "originalSHA256": "09ee105f89a141a612ab597ab0ca91ad23495423293ea4c269c4bab6ba936272",
+    "variants": [
+      {
+        "file": "gate-1920.webp",
+        "width": 1920,
+        "bytes": 353026
+      },
+      {
+        "file": "gate-3840.webp",
+        "width": 3840,
+        "bytes": 1097738
+      }
+    ],
+    "note": "仅缩放及编码为网页资源，保留照片内容和原有署名。"
+  },
+  {
+    "source": "用户提供",
+    "originalFilename": "_MG_3814-Pano.jpg",
+    "originalSize": [
+      7083,
+      3968
+    ],
+    "originalSHA256": "96e339a9b43cb6c7bebd8bf2c5a28e9dd07def0b92a05ec37a1a9c49db586a09",
+    "variants": [
+      {
+        "file": "lake-panorama-1920.webp",
+        "width": 1920,
+        "bytes": 229910
+      },
+      {
+        "file": "lake-panorama-3840.webp",
+        "width": 3840,
+        "bytes": 729352
+      }
+    ],
+    "note": "仅缩放及编码为网页资源，保留照片内容和原有署名。"
+  },
+  {
+    "source": "用户提供",
+    "originalFilename": "_MG_3837-1.jpg",
+    "originalSize": [
+      5832,
+      3585
+    ],
+    "originalSHA256": "e538a5ae576e0a2a29363eca95bcb889d09f2b51706abd504205958f74510475",
+    "variants": [
+      {
+        "file": "sunset-square-1920.webp",
+        "width": 1920,
+        "bytes": 295224
+      },
+      {
+        "file": "sunset-square-3840.webp",
+        "width": 3840,
+        "bytes": 925426
+      }
+    ],
+    "note": "仅缩放及编码为网页资源，保留照片内容和原有署名。"
+  },
+  {
+    "source": "用户提供",
+    "originalFilename": "_MG_4613-HDR.jpg",
+    "originalSize": [
+      6224,
+      3885
+    ],
+    "originalSHA256": "839937deed9f3c15ae085c0042f7dd9eb169e3404b18729347039b0461248680",
+    "variants": [
+      {
+        "file": "lake-sunset-1920.webp",
+        "width": 1920,
+        "bytes": 250092
+      },
+      {
+        "file": "lake-sunset-3840.webp",
+        "width": 3840,
+        "bytes": 837132
+      }
+    ],
+    "note": "仅缩放及编码为网页资源，保留照片内容和原有署名。"
+  },
+  {
+    "source": "用户提供",
+    "originalFilename": "_MG_4744.jpg",
+    "originalSize": [
+      6240,
+      3728
+    ],
+    "originalSHA256": "69b1aa027d73481fe6576707c9080ab15d4a8ca06d78a0134a4757ec23741801",
+    "variants": [
+      {
+        "file": "lotus-lake-1920.webp",
+        "width": 1920,
+        "bytes": 361364
+      },
+      {
+        "file": "lotus-lake-3840.webp",
+        "width": 3840,
+        "bytes": 1147052
+      }
+    ],
+    "note": "仅缩放及编码为网页资源，保留照片内容和原有署名。"
+  },
+  {
+    "source": "用户提供",
+    "originalFilename": "月牙楼车轨.jpg",
+    "originalSize": [
+      6144,
+      3447
+    ],
+    "originalSHA256": "12bc77afa7b04db1456a5a6b05314ce797e1275c571f30349f874d7004d0e298",
+    "variants": [
+      {
+        "file": "crescent-trails-1920.webp",
+        "width": 1920,
+        "bytes": 279812
+      },
+      {
+        "file": "crescent-trails-3840.webp",
+        "width": 3840,
+        "bytes": 1089176
+      }
+    ],
+    "note": "仅缩放及编码为网页资源，保留照片内容和原有署名。"
+  }
+]

@@ -1,0 +1,7 @@
+import {chromium} from '../frontend/node_modules/@playwright/test/index.mjs';
+import QRCode from '../frontend/node_modules/qrcode/lib/index.js';
+import fs from 'node:fs';
+const base=process.env.BASE_URL;
+if(!base?.startsWith('https://'))throw Error('BASE_URL must be a public HTTPS address');
+const browser=await chromium.launch({channel:'msedge',headless:true});
+try{const context=await browser.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true});const page=await context.newPage();page.setDefaultTimeout(60000);await page.goto(base);await page.getByRole('heading',{name:'招领大厅'}).waitFor();const health=await page.evaluate(async()=>await(await fetch('/api/v1/health')).json());if(health.mode!=='hyperledger-fabric'||!health.ok)throw Error('public Fabric health check failed');await page.goto(base+'/#/share');await page.getByRole('heading',{name:'手机访问'}).waitFor();await page.locator('img').waitFor();fs.mkdirSync('artifacts',{recursive:true});await page.screenshot({path:'artifacts/public-mobile.png',fullPage:true});await QRCode.toFile('artifacts/experience-qr.png',base,{width:480,margin:2});fs.writeFileSync('artifacts/public-check.json',JSON.stringify({ok:true,url:base,checkedAt:new Date().toISOString(),mode:health.mode,checks:['HTTPS 页面','真实 Fabric 健康','移动浏览器','入口二维码']},null,2));console.log(JSON.stringify({ok:true,url:base,mode:health.mode}));}finally{await browser.close()}
